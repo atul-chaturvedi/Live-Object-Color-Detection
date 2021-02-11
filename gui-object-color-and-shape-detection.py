@@ -116,28 +116,28 @@ class Main(App):
         # start processing loop
         while (self.do_vid):
             success, imgOriginal = cap.read()
-            # img = np.asarray(imgOriginal)
-            # img = cv2.resize(img,(32,32))
-            # img = preProcessing(img)
-            # cv2.imshow("Processsed Image",img)
-            # img = img.reshape(1,32,32,1)
-            # #### PREDICT
-            # classIndex = int(model.predict_classes(img))
-            # #print(classIndex)
-            # predictions = model.predict(img)
-            # #print(predictions)
-            # probVal= np.amax(predictions)
-            # print(classIndex,probVal)
+            img = np.asarray(imgOriginal)
+            img = cv2.resize(img,(32,32))
+            img = preProcessing(img)
+            cv2.imshow("Processsed Image",img)
+            img = img.reshape(1,32,32,1)
+            #### PREDICT
+            classIndex = int(model.predict_classes(img))
+            #print(classIndex)
+            predictions = model.predict(img)
+            #print(predictions)
+            probVal= np.amax(predictions)
+            print(classIndex,probVal)
 
-            # if probVal> threshold:
-            #     cv2.putText(imgOriginal,str(classIndex) + "   "+str(probVal),
-            #                 (50,50),cv2.FONT_HERSHEY_COMPLEX,
-            #                 1,(0,0,255),1)
-            #     if(probVal>0.95):
-            #         mytext = str(classIndex)
-            #         language = 'en'
-            #         speak = winclc.Dispatch("SAPI.SpVoice")
-            #         speak.Speak(mytext)
+            if probVal> threshold:
+                cv2.putText(imgOriginal,str(classIndex) + "   "+str(probVal),
+                            (50,50),cv2.FONT_HERSHEY_COMPLEX,
+                            1,(0,0,255),1)
+                if(probVal>0.95):
+                    mytext = str(classIndex)
+                    language = 'en'
+                    speak = winclc.Dispatch("SAPI.SpVoice")
+                    speak.Speak(mytext)
 
             # cv2.imshow("Original Image",imgOriginal)
             Clock.schedule_once(partial(self.display_frame, imgOriginal))
